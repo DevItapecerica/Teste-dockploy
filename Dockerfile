@@ -1,17 +1,11 @@
-# Usa uma imagem base leve com Nginx
+# Usa uma imagem leve com Nginx
 FROM nginx:alpine
 
-# Remove a configuração padrão do Nginx
-RUN rm -rf /usr/share/nginx/html/*
+# Copia todos os arquivos da raiz do projeto para o diretório público do Nginx
+COPY . /usr/share/nginx/html
 
-# Copia os arquivos HTML/CSS/JS para o diretório público do Nginx
-COPY ./public /usr/share/nginx/html
+# Expõe a porta padrão
+EXPOSE 80
 
-# Copia uma configuração customizada (opcional)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expõe a porta padrão do Nginx
-EXPOSE 3333
-
-# Inicia o Nginx em modo foreground
+# Mantém o Nginx rodando em foreground
 CMD ["nginx", "-g", "daemon off;"]
